@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.12.0, 2020-05-27T13:56:26. -->
+<!-- Written by QtCreator 4.12.0, 2020-05-27T14:03:54. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -306,8 +306,9 @@
     </valuelist>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/Applications/QT/Projects/TP_4_Dzwig/TP_4_Dzwig.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/Applications/QT/Projects/TP_4_Dzwig/TP_4_Dzwig.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">TP_4_Dzwig2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/Users/Marcel/Documents/GitHub/D-wig/TP_4_Dzwig.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/Users/Marcel/Documents/GitHub/D-wig/TP_4_Dzwig.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>
     <value type="bool" key="RunConfiguration.Arguments.multi">false</value>
     <value type="QString" key="RunConfiguration.OverrideDebuggerStartup"></value>
