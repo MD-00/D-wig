@@ -105,10 +105,10 @@ int main(int argc, const char * argv[]) {
         
         
         
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)){
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) && lina->body.getPosition().x >= 130.0f) {
                 lina->body.move(-20.0f, 0.0f);
             }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)){
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) && lina->body.getPosition().x <= 790.0f) {
                 lina->body.move(20.0f, 0.0f);
             }
         
