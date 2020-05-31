@@ -1,6 +1,7 @@
 //podnoszenie na enter
 //opuszczanie na spacji
 //poruszanie sie wasd
+//no niezle
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
