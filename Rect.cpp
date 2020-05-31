@@ -32,32 +32,38 @@ void Rect::setColor(sf::Color color){
 
 void Rect::Update(){
     sf::Vector2f movement(0.0f, 0.0f);
-//    if(body.getPosition().x<=845.0f && body.getPosition().x>=60.0f){
-        if(steer=='a'){
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)){
-                movement.x-=20.0f;
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)){
-                movement.x+=20.0f;
-            }
-            body.move(movement.x, movement.y);
+
+    if(steer=='a'){
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) && body.getPosition().x >= 130.0f){
+				movement.x -= 20.0f;
+			std::cout << body.getPosition().x << std::endl;
         }
-        if(steer=='b'){
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)){
-                movement.x-=20.0f;
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)){
-                movement.x+=20.0f;
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)){
-                movement.y-=20.0f;
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)){
-                movement.y+=20.0f;
-            }
-            
-            body.move(movement.x, movement.y);
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) && body.getPosition().x <= 790.0f){
+            movement.x+=20.0f;
+			std::cout << body.getPosition().x << std::endl;
         }
+        body.move(movement.x, movement.y);
+    }
+	if (steer == 'b') {
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) && body.getPosition().x >= 130.0f) 
+		{
+			movement.x -= 20.0f;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) && body.getPosition().x <= 790.0f)
+		{
+			movement.x += 20.0f;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && body.getPosition().y >= 200.0f) {
+			movement.y -= 20.0f;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && body.getPosition().y <= 780.0f) {
+			movement.y += 20.0f;
+		}
+
+            body.move(movement.x, movement.y);
+
+    }
 }
 
 
