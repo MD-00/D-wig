@@ -20,17 +20,23 @@ int main(int argc, const char * argv[]) {
     Rect *suwak;
     suwak = new Rect(SCREEN_WIDTH, SCREEN_HEIGHT, 80.0f, 33.0f, 'a');
     suwak->setPos((float)SCREEN_WIDTH/2, (float)SCREEN_HEIGHT/2-250.0f);
-    suwak->setColor(sf::Color::Red);
+//    suwak->setColor(sf::Color::Red);
     
     Rect *hak;
     hak = new Rect(SCREEN_WIDTH, SCREEN_HEIGHT, 20.0f, 40.0f, 'b');
     hak->setPos((float)SCREEN_WIDTH/2, (float)SCREEN_HEIGHT/2+85.0f-250.0f);
-    hak->setColor(sf::Color::Black);
+//    hak->setColor(sf::Color::Black);
     
     
-    sf::Texture txt;
-    txt.loadFromFile("hak.png");
-    hak->body.setTexture(&txt);
+    sf::Texture hakTxt;
+    hakTxt.loadFromFile("hak.png");
+    hak->body.setTexture(&hakTxt);
+    
+    sf::Texture suwakTxt;
+    suwakTxt.loadFromFile("suwak.png");
+    suwak->body.setTexture(&suwakTxt);
+    
+    
     
     Rect *box;
     box = new Rect(SCREEN_WIDTH, SCREEN_HEIGHT, 50.0f, 50.0f, 'c');
@@ -49,7 +55,7 @@ int main(int argc, const char * argv[]) {
     }
     sf::Sprite background(bckgrnd);
     
-    hak->setTxt("tux.png");
+
     
     float deltaTime = 0.0f;
     sf::Clock clock;
