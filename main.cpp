@@ -1,6 +1,5 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "Animation.hpp"
 #include "Rect.hpp"
 
 
