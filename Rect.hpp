@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 
+
 class Rect{
 public:
     Rect(int SCREENWIDTH, int SCREENHEIGHT, float size_x, float size_y, char steer_select);
@@ -10,11 +11,17 @@ public:
     void Draw(sf::RenderWindow &window);
     void Update();
     void setColor(sf::Color color);
-//    void gecik();
+    void gecik();
+    void setTxt(std::string fileName);
     
 
-private:
+public:
     sf::RectangleShape body;
-    char steer; 
+    char steer;
+    sf::Vector2f main_pos;
+    sf::Vector2f size;
+    int screenwidth;
+    int screenheight;
+//    std::string fileName;
 };
 
