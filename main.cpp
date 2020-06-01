@@ -1,22 +1,23 @@
 //podnoszenie na enter
 //opuszczanie na spacji
 //poruszanie sie wasd
-//no niezle
+
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Rect.hpp"
 #include <cmath>
-
-
+#include <time.h>
+#include <sstream>
 const int SCREEN_WIDTH = 1260;
 const int SCREEN_HEIGHT = 800;
+const int MAX_CRANE_WEIGHT = 15; // udzwig to 15t
 
 int main(int argc, const char * argv[]) {
     sf::RenderWindow window (sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Dzwig");
     window.setFramerateLimit(60);
     window.setVerticalSyncEnabled(true);
-    
+	srand(time(0));
     
     Rect *suwak;
     suwak = new Rect(SCREEN_WIDTH, SCREEN_HEIGHT, 80.0f, 33.0f, 'a');
@@ -39,9 +40,22 @@ int main(int argc, const char * argv[]) {
     
     Rect *box;
     box = new Rect(SCREEN_WIDTH, SCREEN_HEIGHT, 50.0f, 50.0f, 'c');
-    box->setPos((float)SCREEN_WIDTH-25.0f, (float)SCREEN_HEIGHT-25.0f);
+    box->setPos((float)SCREEN_WIDTH-500.0f, (float)SCREEN_HEIGHT-25.0f);
     box->setColor(sf::Color::Green);
-    
+	box->randWeight(); // losowanie wagi
+	
+	sf::Text text; // wyswietlanie tekstu dla boxa, w funkcji cos nie dziala - trzeba dopracowac
+	sf::Font font;
+	if (!font.loadFromFile("arial.otf"))
+		throw("Nie zaladowano czcionki");
+	std::stringstream textbox;
+	textbox << "Ciezar boxa:  " << box->weight << "t";
+	text.setFont(font);
+	text.setCharacterSize(16);
+	text.setPosition(50.0f, 25.0f);
+	text.setFillColor(sf::Color::Black);
+	text.setString(textbox.str());
+
     Rect *lina;
     lina = new Rect(SCREEN_WIDTH, SCREEN_HEIGHT, 5.0f, 100.0f, 'a');
     lina->setPos((float)SCREEN_WIDTH/2, (float)SCREEN_HEIGHT/2+85.0f-280.0f);
@@ -72,16 +86,21 @@ int main(int argc, const char * argv[]) {
         
         if(hak->body.getGlobalBounds().intersects(box->body.getGlobalBounds()) && sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)){
             box->steer='b';
+			box->visibility = true;
+			if (box->weight > MAX_CRANE_WEIGHT)
+			{
+				box->steer = 'c';
+			}
         }
         
-        if (box->steer=='b'){
+        if (box->steer=='b' || box->steer=='c'){
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)){
                 box->steer='c';
-
+				box->visibility = false;
             }
         }
         
-        
+		
         sf::Vector2f fall=box->body.getPosition();
         if(fall.y<SCREEN_HEIGHT-(box->body.getSize().y/2)-3.0f && box->steer=='c'){
             float speed = 30.0f;
@@ -91,13 +110,13 @@ int main(int argc, const char * argv[]) {
             
             box->body.setPosition(fall.x, SCREEN_HEIGHT-(box->body.getSize().y/2)-3.0f);
         }
-        
+		
         window.clear();
         window.draw(background);
-        
+
         box->Update();
         box->Draw(window);
-        
+
         lina->Update();
         lina->Draw(window);
      
@@ -106,11 +125,12 @@ int main(int argc, const char * argv[]) {
         
         hak->Update();
         hak->Draw(window);
-    
+
+		if(box->visibility)
+		window.draw(text);
+
         window.display();
-        
-        
-        
+            
         //warunek taki na koncu, zeby sie nic nie rozjezdzalo, wszystko pod suwak
         if(hak->body.getPosition().x!=suwak->body.getPosition().x || lina->body.getPosition().x!=suwak->body.getPosition().x ){
             float y_hak = hak->body.getPosition().y;
