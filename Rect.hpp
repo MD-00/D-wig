@@ -11,20 +11,17 @@ public:
     void Draw(sf::RenderWindow &window);
     void Update();
     void setColor(sf::Color color);
-    void gecik();
-    void setTxt(std::string fileName);
-	void randWeight();
-	void textWeight(sf::Text &text);
+    void randWeight();
+    void textWeight(sf::Text &text);
+
+    
 
 public:
     sf::RectangleShape body;
     char steer;
     sf::Vector2f main_pos;
-    sf::Vector2f size;
-    int screenwidth;
-    int screenheight;
-	int weight;
-	bool visibility;
-//    std::string fileName;
+    int weight;
+    bool visibility;
+
 };
 

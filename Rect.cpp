@@ -1,22 +1,18 @@
 #include <SFML/Graphics.hpp>
 #include "Rect.hpp"
 #include <iostream>
-#include <sstream>
+
 
 
 Rect::Rect(int SCREEN_WIDTH, int SCREEN_HEIGHT, float size_x, float size_y, char steer_select)
 {
-    screenwidth=SCREEN_WIDTH;
-    screenheight=SCREEN_HEIGHT;
     sf::Vector2f bodySize(size_x, size_y);
     body.setSize(bodySize);
-    size.x=size_x;
-    size.y=size_y;
-	weight = 0;
-    body.setOrigin(bodySize.x/2, bodySize.y/2);
+    body.setOrigin(bodySize.x/2, bodySize.y/2); //ustalenie srodka kazdego recta
     steer=steer_select;
-	visibility = false;
+    weight = 0;
 }
+
 Rect::~Rect(){
     
 }
@@ -69,37 +65,25 @@ void Rect::Update(){
     }
 }
 
-void Rect::gecik() {
-	sf::Vector2f xd = body.getSize();
-}
+
 
 void Rect::randWeight()
 {
-	weight = rand() % 20 + 5;
+    weight = rand() % 20 + 5;
 }
 
 /*
-void Rect::textWeight(sf::Text &text) {
-	sf::Font font;
-	if (!font.loadFromFile("arial.otf"))
-		throw("Nie zaladowano czcionki");
-	std::stringstream textbox;
-	textbox << "Ciezar boxa:  " << weight << "t";
-	text.setFont(font);
-	text.setCharacterSize(16);
-	text.setPosition(50.0f, 25.0f);
-	text.setFillColor(sf::Color::Black);
-	text.setString(textbox.str());
-
-}
-*/
-void Rect::setTxt(std::string fileName){
-        sf::Texture bodyTexture;
-    
-        bodyTexture.loadFromFile(fileName);
-        body.setTexture(&bodyTexture);
-//        sf::Vector2u textureSize = bodyTexture.getSize();
-//        textureSize.x /= 3;
-//        textureSize.y /=9;
-//        body.setTextureRect(sf::IntRect(textureSize.x*2, textureSize.y*3, textureSize.x, textureSize.y));
-}
+ void Rect::textWeight(sf::Text &text) {
+ sf::Font font;
+ if (!font.loadFromFile("arial.otf"))
+ throw("Nie zaladowano czcionki");
+ std::stringstream textbox;
+ textbox << "Ciezar boxa:  " << weight << "t";
+ text.setFont(font);
+ text.setCharacterSize(16);
+ text.setPosition(50.0f, 25.0f);
+ text.setFillColor(sf::Color::Black);
+ text.setString(textbox.str());
+ 
+ }
+ */
