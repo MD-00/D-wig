@@ -1,7 +1,16 @@
 //podnoszenie na enter
 //opuszczanie na spacji
 //poruszanie sie wasd
-//no niezle
+
+//Zmiany:
+//zmniejszanie/zwiekszanie wagi na N/M
+//przeniesienie textboxa do glownej petli, zeby sie aktualizowal wraz ze zmiana wagi
+
+//do zrobienia:
+//przeniesc textboxa do klasy, bo przy wiekszej ilosci obiektow bedzie potrzebna wieksza ilosc textboxow
+// no i znowu kod uporzadkowac
+// i moze zrobic tak, ze jedno wcisniecie m -> zwiekszenie wagi dokladnie o 1, bo teraz dziala na zasadzie isKeyPressed i za duzo sie zwieksza
+
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
@@ -51,13 +60,8 @@ int main(int argc, const char * argv[]) {
     sf::Font font;
     if (!font.loadFromFile("arial.otf"))
         throw("Nie zaladowano czcionki");
-    std::stringstream textbox;
-    textbox << "Ciezar boxa:  " << box->weight << "t";
-    text.setFont(font);
-    text.setCharacterSize(16);
-    text.setPosition(50.0f, 25.0f);
-    text.setFillColor(sf::Color::Black);
-    text.setString(textbox.str());
+
+
 
     
     Rect *lina;
@@ -81,20 +85,34 @@ int main(int argc, const char * argv[]) {
                     break;
             }
         }
+        std::stringstream textbox;
+        textbox << "Ciezar boxa:  " << box->weight << "t";
+        text.setFont(font);
+        text.setCharacterSize(16);
+        text.setPosition(50.0f, 25.0f);
+        text.setFillColor(sf::Color::Black);
+        text.setString(textbox.str());
+        
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M)){
+            box->weight+=1;
+        }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::N)){
+            box->weight-=1;
+        }
         
         sf::Vector2f zmiana_liny;
         zmiana_liny.x=5.0f;
         zmiana_liny.y=(float)abs(suwak->body.getPosition().y - hak->body.getPosition().y)-5.0f; //-5.0f zeby pokryc braki przy rysowaniu
         lina->body.setSize(zmiana_liny);
-
         
         if(hak->body.getGlobalBounds().intersects(box->body.getGlobalBounds()) && sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)){
-            box->steer='b';
+            
             box->visibility = true;
             if (box->weight > MAX_CRANE_WEIGHT)
             {
                 box->steer = 'c';
             }
+            else box->steer='b';
         }
         
         if (box->steer=='b' || box->steer=='c'){
@@ -105,6 +123,7 @@ int main(int argc, const char * argv[]) {
             }
         }
         
+
         
         sf::Vector2f fall=box->body.getPosition();
         if(fall.y<SCREEN_HEIGHT-(box->body.getSize().y/2)-3.0f && box->steer=='c'){
