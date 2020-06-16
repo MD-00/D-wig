@@ -3,7 +3,6 @@
 #include <iostream>
 
 
-
 Rect::Rect(int SCREEN_WIDTH, int SCREEN_HEIGHT, float size_x, float size_y, char steer_select)
 {
     sf::Vector2f bodySize(size_x, size_y);
@@ -65,25 +64,7 @@ void Rect::Update(){
     }
 }
 
-
-
 void Rect::randWeight()
 {
     weight = rand() % 20 + 5;
 }
-
-/*
- void Rect::textWeight(sf::Text &text) {
- sf::Font font;
- if (!font.loadFromFile("arial.otf"))
- throw("Nie zaladowano czcionki");
- std::stringstream textbox;
- textbox << "Ciezar boxa:  " << weight << "t";
- text.setFont(font);
- text.setCharacterSize(16);
- text.setPosition(50.0f, 25.0f);
- text.setFillColor(sf::Color::Black);
- text.setString(textbox.str());
- 
- }
- */
