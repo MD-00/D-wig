@@ -7,10 +7,7 @@
 //przeniesienie textboxa do glownej petli, zeby sie aktualizowal wraz ze zmiana wagi
 
 //do zrobienia:
-//przeniesc textboxa do klasy, bo przy wiekszej ilosci obiektow bedzie potrzebna wieksza ilosc textboxow
 // no i znowu kod uporzadkowac
-// i moze zrobic tak, ze jedno wcisniecie m -> zwiekszenie wagi dokladnie o 1, bo teraz dziala na zasadzie isKeyPressed i za duzo sie zwieksza
-
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
@@ -47,8 +44,6 @@ int main(int argc, const char * argv[]) {
     suwakTxt.loadFromFile("suwak.png");
     suwak->body.setTexture(&suwakTxt);
     
-    
-    
     Rect *box;
     box = new Rect(SCREEN_WIDTH, SCREEN_HEIGHT, 50.0f, 50.0f, 'c');
     box->setPos((float)SCREEN_WIDTH-500.0f, (float)SCREEN_HEIGHT-25.0f);
@@ -60,10 +55,8 @@ int main(int argc, const char * argv[]) {
     sf::Font font;
     if (!font.loadFromFile("arial.otf"))
         throw("Nie zaladowano czcionki");
+	box->visibility = true;
 
-
-
-    
     Rect *lina;
     lina = new Rect(SCREEN_WIDTH, SCREEN_HEIGHT, 5.0f, 100.0f, 'a');
     lina->setPos((float)SCREEN_WIDTH/2, (float)SCREEN_HEIGHT/2+85.0f-280.0f);
@@ -71,9 +64,9 @@ int main(int argc, const char * argv[]) {
     
     
     sf::Texture bckgrnd;
-    if(!bckgrnd.loadFromFile("background.png")){
+    if(!bckgrnd.loadFromFile("background.png"))
         std::cout << "Nie zaladowano tekstury bckgrnd" << std::endl;
-    }
+    
     sf::Sprite background(bckgrnd);
     
     while(window.isOpen()){
@@ -90,10 +83,13 @@ int main(int argc, const char * argv[]) {
 				if (event.key.code == sf::Keyboard::Key::N)
 					box->weight += 1;
 
-				else if (event.key.code == sf::Keyboard::Key::M && box->weight>0)
+				else if (event.key.code == sf::Keyboard::Key::M && box->weight>1)
 					box->weight -= 1;
 			}
 ;        }
+
+		if (box->weight > MAX_CRANE_WEIGHT) 		
+			box->steer = 'c';
 
         std::stringstream textbox;
         textbox << "Ciezar boxa:  " << box->weight << "t";
@@ -103,13 +99,6 @@ int main(int argc, const char * argv[]) {
         text.setFillColor(sf::Color::Black);
         text.setString(textbox.str());
 
-		if (event.type == sf::Event::KeyPressed)
-		{
-			if (event.key.code == sf::Keyboard::Num1)
-			{
-				std::cout << "cs";
-			}
-		}
         sf::Vector2f zmiana_liny;
         zmiana_liny.x=5.0f;
         zmiana_liny.y=(float)abs(suwak->body.getPosition().y - hak->body.getPosition().y)-5.0f; //-5.0f zeby pokryc braki przy rysowaniu
@@ -117,33 +106,26 @@ int main(int argc, const char * argv[]) {
         
         if(hak->body.getGlobalBounds().intersects(box->body.getGlobalBounds()) && sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)){
             
-            box->visibility = true;
             if (box->weight > MAX_CRANE_WEIGHT)
-            {
                 box->steer = 'c';
-            }
+
             else box->steer='b';
         }
         
-        if (box->steer=='b' || box->steer=='c'){
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)){
+        if (box->steer=='b' || box->steer=='c')
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
                 box->steer='c';
-                box->visibility = false;
 
-            }
-        }
-        
 
-        
         sf::Vector2f fall=box->body.getPosition();
         if(fall.y<SCREEN_HEIGHT-(box->body.getSize().y/2)-3.0f && box->steer=='c'){
             float speed = 30.0f;
             box->body.setPosition(fall.x, fall.y+speed);
         }
-        if(fall.y>SCREEN_HEIGHT-(box->body.getSize().y/2)-3.0f && box->steer=='c'){       //konieczna korekta wysokosci!! bez tego sie buguje
-            
+
+        if(fall.y>SCREEN_HEIGHT-(box->body.getSize().y/2)-3.0f && box->steer=='c')     //konieczna korekta wysokosci!! bez tego sie buguje           
             box->body.setPosition(fall.x, SCREEN_HEIGHT-(box->body.getSize().y/2)-3.0f);
-        }
+
         
         window.clear();
         window.draw(background);
@@ -159,16 +141,12 @@ int main(int argc, const char * argv[]) {
         
         hak->Update();
         hak->Draw(window);
-    
-        
-        
+               
         if(box->visibility)
             window.draw(text);
 
         window.display();
-        
-        
-        
+                       
         //warunek taki na koncu, zeby sie nic nie rozjezdzalo, wszystko pod suwak
         if(hak->body.getPosition().x!=suwak->body.getPosition().x || lina->body.getPosition().x!=suwak->body.getPosition().x ){
             float y_hak = hak->body.getPosition().y;
