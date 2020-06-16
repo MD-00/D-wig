@@ -78,13 +78,23 @@ int main(int argc, const char * argv[]) {
     
     while(window.isOpen()){
         sf::Event event;
+		window.setKeyRepeatEnabled(false);
         while(window.pollEvent(event)){
             switch (event.type) {
                 case sf::Event::Closed:
                     window.close();
                     break;
             }
-        }
+			if (event.type == sf::Event::KeyPressed)
+			{
+				if (event.key.code == sf::Keyboard::Key::N)
+					box->weight += 1;
+
+				else if (event.key.code == sf::Keyboard::Key::M && box->weight>0)
+					box->weight -= 1;
+			}
+;        }
+
         std::stringstream textbox;
         textbox << "Ciezar boxa:  " << box->weight << "t";
         text.setFont(font);
@@ -92,14 +102,14 @@ int main(int argc, const char * argv[]) {
         text.setPosition(50.0f, 25.0f);
         text.setFillColor(sf::Color::Black);
         text.setString(textbox.str());
-        
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M)){
-            box->weight+=1;
-        }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::N)){
-            box->weight-=1;
-        }
-        
+
+		if (event.type == sf::Event::KeyPressed)
+		{
+			if (event.key.code == sf::Keyboard::Num1)
+			{
+				std::cout << "cs";
+			}
+		}
         sf::Vector2f zmiana_liny;
         zmiana_liny.x=5.0f;
         zmiana_liny.y=(float)abs(suwak->body.getPosition().y - hak->body.getPosition().y)-5.0f; //-5.0f zeby pokryc braki przy rysowaniu
